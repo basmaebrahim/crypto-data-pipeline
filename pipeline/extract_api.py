@@ -3,13 +3,13 @@ import pandas as pd
 from pathlib import Path
 import yaml
 import logging
-import time  # مهم للـ retry
+import time  # for retry
 
 def extract():
-    # مسار ملف الإعدادات
+    # config file path
     config_path = Path(__file__).parent.parent / "config" / "config.yaml"
 
-    # قراءة إعدادات YAML
+    # read congig.YAML file
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
 
@@ -36,17 +36,18 @@ def extract():
             break
         except requests.RequestException as e:
             logging.warning(f"Attempt {attempt+1} failed: {e}")
-            time.sleep(2)  # انتظار 2 ثانية قبل المحاولة التالية
+            time.sleep(2)  # wait 2 seconds before second retry
+
     else:
         raise Exception("API request failed after 3 attempts")
 
-    # تحويل البيانات إلى DataFrame
+    # convert to DataFrame
     data = response.json()
     df = pd.DataFrame(data)
 
     # save raw data 
     raw_path = Path(__file__).parent.parent / "data" / "raw" / "crypto_raw.csv"
-    raw_path.parent.mkdir(parents=True, exist_ok=True)  # التأكد من وجود المجلد
+    raw_path.parent.mkdir(parents=True, exist_ok=True)  
 
     # save data
     

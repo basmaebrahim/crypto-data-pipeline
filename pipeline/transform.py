@@ -33,7 +33,7 @@ def transform():
     )
     df = df.sort_values(by="market_cap", ascending=False)
 
-    # 🔹 إضافة Ranking
+    # 🔹add ranking 
     df["rank"] = range(1, len(df) + 1)
     processed_path = Path(__file__).parent.parent / "data" / "processed" / "crypto_clean.csv"
     processed_path.parent.mkdir(parents=True, exist_ok=True)
