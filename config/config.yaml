@@ -1,0 +1,4 @@
+crypto_api:
+  base_url: "https://api.coingecko.com/api/v3"
+  coins_endpoint: "/coins/markets"
+  currency: "usd"
